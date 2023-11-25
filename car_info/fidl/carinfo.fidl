@@ -14,3 +14,4 @@ typeCollection CommonTypes {
         Float voltage
     }
 }
+
