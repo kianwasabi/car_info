@@ -11,6 +11,6 @@ typeCollection CommonTypes {
         Float level
         Float consumption
         Float current
-        Float voltag
+        Float voltage
     }
 }
