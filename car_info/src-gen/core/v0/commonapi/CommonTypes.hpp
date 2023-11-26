@@ -42,15 +42,15 @@ struct CommonTypes {
             std::get< 2>(values_) = 0.0f;
             std::get< 3>(values_) = 0.0f;
         }
-        batteryStruct(const float &_levelo, const float &_consumption, const float &_current, const float &_voltage)
+        batteryStruct(const float &_level, const float &_consumption, const float &_current, const float &_voltage)
         {
-            std::get< 0>(values_) = _levelo;
+            std::get< 0>(values_) = _level;
             std::get< 1>(values_) = _consumption;
             std::get< 2>(values_) = _current;
             std::get< 3>(values_) = _voltage;
         }
-        inline const float &getLevelo() const { return std::get< 0>(values_); }
-        inline void setLevelo(const float &_value) { std::get< 0>(values_) = _value; }
+        inline const float &getLevel() const { return std::get< 0>(values_); }
+        inline void setLevel(const float &_value) { std::get< 0>(values_) = _value; }
         inline const float &getConsumption() const { return std::get< 1>(values_); }
         inline void setConsumption(const float &_value) { std::get< 1>(values_) = _value; }
         inline const float &getCurrent() const { return std::get< 2>(values_); }
@@ -58,7 +58,7 @@ struct CommonTypes {
         inline const float &getVoltage() const { return std::get< 3>(values_); }
         inline void setVoltage(const float &_value) { std::get< 3>(values_) = _value; }
         inline bool operator==(const batteryStruct& _other) const {
-        return (getLevelo() == _other.getLevelo() && getConsumption() == _other.getConsumption() && getCurrent() == _other.getCurrent() && getVoltage() == _other.getVoltage());
+        return (getLevel() == _other.getLevel() && getConsumption() == _other.getConsumption() && getCurrent() == _other.getCurrent() && getVoltage() == _other.getVoltage());
         }
         inline bool operator!=(const batteryStruct &_other) const {
             return !((*this) == _other);
