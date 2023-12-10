@@ -1,0 +1,8 @@
+{
+    "commonapi.CarInfo" : {
+        "service_id": 5000,
+        "instances" : {
+            "commonapi.CarInfo": 5001
+        }
+    }
+}
