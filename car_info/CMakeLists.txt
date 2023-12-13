@@ -2,7 +2,7 @@
 cmake_minimum_required (VERSION 3.0)
 set(PROJ_NAME Car_Info)
 project(${PROJ_NAME})
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}-pthread -std=c++11 -fsanitize=thread -g ")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread -std=c++11")
 
 ### PACKAGES ###
 find_package(Python3 COMPONENTS Development)
@@ -21,21 +21,25 @@ set(SOMEIP_RUNTIME_DIR ~/capicxx-someip-runtime)
 set(VSOMEIP_DIR ~/vsomeip)
 set(COMMONAPI_INTERFACE_VER v0/commonapi)
 
+FILE(GLOB PRJ_SOMEIP_LIB_SRCS ./src-gen/someip/v0/commonapi/*.cpp)
+
 ### DIRECTORIES ###
 include_directories(
 	./include
+    ./src-gen/core
+    ./src-gen/someip
 	${Python3_INCLUDE_DIRS}
-    ${CORE_GEN_SRC_DIR}
-    ${SOMEIP_GEN_SRC_DIR}
-    ${SOMEIP_RUNTIME_DIR}/include
-    ${CORE_RUNTIME_DIR}/include
-    ${VSOMEIP_DIR}/include
+    ${COMMONAPI_INCLUDE_DIRS}
+    ${COMMONAPI_SOMEIP_INCLUDE_DIRS}
 )
 
 link_directories(
-    ${SOMEIP_RUNTIME_DIR}/build
-    ${CORE_RUNTIME_DIR}/build
-    ${VSOMEIP_DIR}/build
+    ${COMMONAPI_LIBDIR}
+    ${COMMONAPI_SOMEIP_CMAKE_DIR}/build
+    ${Boost_LIBRARY_DIR}
+    # ${SOMEIP_RUNTIME_DIR}/build
+    # ${CORE_RUNTIME_DIR}/build
+    # ${VSOMEIP_DIR}/build
 )
 
 ### BUILD ###
@@ -44,8 +48,6 @@ add_executable(CarInfoService
     ${PRJ_SRC_VAR}/PiRacer.cpp
     ${PRJ_SRC_VAR}/CarInfoService.cpp
     ${PRJ_SRC_VAR}/CarInfoStubImpl.cpp
-    ${SOMEIP_GEN_SRC_DIR}/${COMMONAPI_INTERFACE_VER}/CarInfoSomeIPStubAdapter.cpp
-    ${SOMEIP_GEN_SRC_DIR}/${COMMONAPI_INTERFACE_VER}/CarInfoSomeIPDeployment.cpp
 )
 target_link_libraries(CarInfoService 
     CommonAPI 
@@ -64,4 +66,12 @@ target_link_libraries(CarInfoClient
     CommonAPI 
     CommonAPI-SomeIP 
     vsomeip3
+)
+
+add_library(CarInfoService-someip
+    SHARED ${PRJ_SOMEIP_LIB_SRCS}
+)
+target_link_libraries(CarInfoService-someip
+    CommonAPI
+    CommonAPI-SomeIP
 )
