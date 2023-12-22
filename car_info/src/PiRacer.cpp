@@ -57,6 +57,11 @@ bool PiRacer::deleteInstance()
     return false;
 }
 
+/**
+ * Reads the battery information from the PiRacer.
+ * This function reads the absolute voltage, consumption, and current from the PiRacer.
+ * It then calculates the battery level based on the voltage and limits it to a range of 0.01 to 1.00.
+ */
 void PiRacer::readBatteryInfo(){
 	// read absolut voltage from piracer
 	py::object get_battery_voltage = pInstance.attr("get_battery_voltage");

@@ -7,6 +7,17 @@ CarInfoStubImpl::CarInfoStubImpl() {
 CarInfoStubImpl::~CarInfoStubImpl() {
 }
 
+/**
+ * @brief Sets the battery information in the car.
+ * 
+ * This function sets the battery level, voltage, current, and consumption
+ * in the car's battery struct.
+ * 
+ * @param level_ The battery level.
+ * @param voltage_ The battery voltage.
+ * @param current_ The battery current.
+ * @param consumption_ The battery consumption.
+ */
 void CarInfoStubImpl::setBatteryStruct(float level_, float voltage_, float current_, float consumption_) {
     v0::commonapi::CommonTypes::batteryStruct battery;
     battery.setLevel(level_);

@@ -7,6 +7,15 @@
 #include "../src-gen/core/v0/commonapi/CarInfoProxy.hpp"
 #include "../src-gen/core/v0/commonapi/CommonTypes.hpp"
 
+/**
+ * @brief The main function of the program.
+ * 
+ * This function creates a proxy to communicate with the CarInfo service.
+ * It subscribes to the battery attribute change event and prints the received battery information.
+ * The function waits indefinitely until the program is terminated.
+ * 
+ * @return 0 indicating successful execution of the program.
+ */
 int main(){
     /* Create Proxy */
     std::shared_ptr < CommonAPI::Runtime > runtime = CommonAPI::Runtime::get();

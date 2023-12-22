@@ -30,6 +30,17 @@ void cleanUp()
 }
 
 /*main*/
+/**
+ * @brief The main function of the program.
+ * 
+ * This function is the entry point of the program. It performs the necessary runtime setups,
+ * creates a singleton instance of the PiRacer class, sets up the CommonAPI service, and enters
+ * the main loop. In the main loop, it reads battery information from the PiRacer instance,
+ * sets the battery information to the CarInfo service, and sleeps for 1 second before repeating
+ * the process.
+ * 
+ * @return 0 indicating successful execution of the program.
+ */
 int main() { 
     /*runtime setups*/
     // signal handler
