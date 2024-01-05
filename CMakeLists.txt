@@ -1,15 +1,15 @@
 ### SETUP ###
 cmake_minimum_required (VERSION 3.15)
-set(APP_PACKAGE_NAME CarInfo) 
-set(MAJOR_VERSION 0)
-set(MINOR_VERSION 1)
-project(Car_Info VERSION 0.1 LANGUAGE CXX)
-
+project(Car_Info VERSION 0.1 LANGUAGES CXX)
 ### PACKAGES ###
 find_package(Python3 COMPONENTS Development)
 find_package(Boost REQUIRED COMPONENTS python3)
 find_package(CommonAPI REQUIRED)
 find_package(CommonAPI-SomeIP REQUIRED)
+
+set(APP_PACKAGE_NAME CarInfo) 
+set(MAJOR_VERSION 0)
+set(MINOR_VERSION 1)
 
 ### VARIABLES ###
 
@@ -20,7 +20,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(PRJ_SRC_VAR src)
 set(PRJ_SRC_GEN_VAR src-gen)
-set(PRJ_SRC_GEN_PATH ${CMAKE_CURRENT_SOURCE_DIR}/${PRJ_SRC_GEN_VAR})
+set(PRJ_SRC_GEN_PATH ${CMAKE_CURRENT_SOURCE_DIR}/car_info/${PRJ_SRC_GEN_VAR})
 set(CORE_GEN_SRC_DIR ${PRJ_SRC_GEN_PATH}/core)
 set(SOMEIP_GEN_SRC_DIR ${PRJ_SRC_GEN_PATH}/someip)
 set(CORE_RUNTIME_DIR ~/capicxx-core-runtime)
@@ -28,7 +28,7 @@ set(SOMEIP_RUNTIME_DIR ~/capicxx-someip-runtime)
 set(VSOMEIP_DIR ~/vsomeip)
 set(COMMONAPI_INTERFACE_VER v0/commonapi)
 
-FILE(GLOB PRJ_SOMEIP_LIB_SRCS ./src-gen/someip/v0/commonapi/*.cpp)
+FILE(GLOB PRJ_SOMEIP_LIB_SRCS car_info/src-gen/someip/v0/commonapi/*.cpp)
 
 ### DIRECTORIES ###
 include_directories(
