@@ -1,5 +1,8 @@
 ### SETUP ###
 cmake_minimum_required (VERSION 3.15)
+set(APP_PACKAGE_NAME CarInfo) 
+set(MAJOR_VERSION 0)
+set(MINOR_VERSION 1)
 project(Car_Info VERSION 0.1 LANGUAGE CXX)
 
 ### PACKAGES ###
@@ -9,9 +12,6 @@ find_package(CommonAPI REQUIRED)
 find_package(CommonAPI-SomeIP REQUIRED)
 
 ### VARIABLES ###
-set(APP_PACKAGE_NAME CarInfo) 
-set(MAJOR_VERSION 0)
-set(MINOR_VERSION 1)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread -std=c++11")
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
