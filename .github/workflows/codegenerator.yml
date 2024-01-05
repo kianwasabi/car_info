@@ -5,8 +5,8 @@ on:
     # branches: [ "car_info" ]
     branches: [ "main" ]
     paths:
-      - 'fidl/**.fidl'
-      - 'fidl/**.fdepl'
+      - 'car_info/fidl/**.fidl'
+      - 'car_info/fidl/**.fdepl'
   workflow_dispatch:
 
 jobs:
@@ -20,9 +20,9 @@ jobs:
 
       - name: 1) Delete old generated code, if exists. And create new folders.
         run: |
-          rm -rf ${{ github.workspace }}/src-gen
-          mkdir -p ${{ github.workspace }}/src-gen/core
-          mkdir -p ${{ github.workspace }}/src-gen/someip
+          rm -rf ${{ github.workspace }}/car_info/src-gen
+          mkdir -p ${{ github.workspace }}/car_info/src-gen/core
+          mkdir -p ${{ github.workspace }}/car_info/src-gen/someip
 
       - name: 2) Download CommonAPI Core Generator.
         run: |
@@ -37,18 +37,18 @@ jobs:
       - name: 4) Generate CommonAPI Code from Core Generator.
         run: |
           echo $(find ${{ github.workspace }} -type f -name '*.fidl')
-          core-generator/commonapi-core-generator-linux-x86_64 -sk $(find ${{ github.workspace }} -type f -name '*.fidl') -d ${{ github.workspace }}/src-gen/core
+          core-generator/commonapi-core-generator-linux-x86_64 -sk $(find ${{ github.workspace }} -type f -name '*.fidl') -d ${{ github.workspace }}/car_info/src-gen/core
 
       - name: 5) Generate CommonAPI Code with the vSOME/IP Generator.
         run: |
           echo $(find ${{ github.workspace }} -type f -name '*.fdepl')
-          someip-generator/commonapi-someip-generator-linux-x86_64 $(find ${{ github.workspace }} -type f -name '*.fdepl') -d ${{ github.workspace }}/src-gen/someip
+          someip-generator/commonapi-someip-generator-linux-x86_64 $(find ${{ github.workspace }} -type f -name '*.fdepl') -d ${{ github.workspace }}/car_info/src-gen/someip
 
       - name: 6) Save generated code in src-gen (Commit and Push)
         if: github.event_name == 'push'
         run: |
           git config user.name "$(git log -n 1 --pretty=format:%an)"
           git config user.email "$(git log -n 1 --pretty=format:%ae)"
-          git add src-gen
+          git add car_info/src-gen
           git commit -m "Auto Generated fidl" || true 
           git push
