@@ -1,0 +1,17 @@
+# Config file for the CanReceiver package
+# Exports the follwing targets:
+#   CanReceiver - CMake target for CanReceiver SomeIP
+# Additionally, the following variables are defined:
+#   CanReceiver_VERSION - The CanReceiver version number
+
+# Compute paths
+get_filename_component(CANRECEIVER_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+
+# Our library dependencies (contains definitions for IMPORTED targets)
+include("${CANRECEIVER_CMAKE_DIR}/CanReceiver-someipTargets.cmake")
+
+# Legacy variable, kept for compatibility
+get_target_property(CANRECEIVER_INCLUDE_DIRS CanReceiver-someip INTERFACE_INCLUDE_DIRECTORIES)
+
+set(CANRECEIVER_VERSION @PACKAGE_VERSION@)
+set(CANRECEIVER_VERSION_STRING "@PACKAGE_VERSION@")
