@@ -1,17 +1,18 @@
-# Config file for the CanReceiver package
-# Exports the follwing targets:
-#   CanReceiver - CMake target for CanReceiver SomeIP
+# Config file for the CarInfo package
+# Exports the following targets:
+#   CarInfo - CMake target for CarInfoService
 # Additionally, the following variables are defined:
-#   CanReceiver_VERSION - The CanReceiver version number
+#   CarInfo_VERSION - The CarInfo version number
 
 # Compute paths
-get_filename_component(CANRECEIVER_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(CARINFO_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
 
 # Our library dependencies (contains definitions for IMPORTED targets)
-include("${CANRECEIVER_CMAKE_DIR}/CanReceiver-someipTargets.cmake")
+# include("${CARINFO_CMAKE_DIR}/CarInfoTargets.cmake") # Uncomment if needed
 
 # Legacy variable, kept for compatibility
-get_target_property(CANRECEIVER_INCLUDE_DIRS CanReceiver-someip INTERFACE_INCLUDE_DIRECTORIES)
+# get_target_property(CARINFO_INCLUDE_DIRS CarInfo INTERFACE_INCLUDE_DIRECTORIES)
 
-set(CANRECEIVER_VERSION @PACKAGE_VERSION@)
-set(CANRECEIVER_VERSION_STRING "@PACKAGE_VERSION@")
+set(CARINFO_VERSION @PACKAGE_VERSION@)
+set(CARINFO_VERSION_STRING "@PACKAGE_VERSION@")
+

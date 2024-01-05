@@ -136,3 +136,11 @@ install(EXPORT ${APP_PACKAGE_NAME}Targets
   FILE ${APP_PACKAGE_NAME}Targets.cmake
   DESTINATION "${INSTALL_CMAKE_DIR}"
 )
+
+set(PACKAGE_VERSION ${PROJECT_VERSION})
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${APP_PACKAGE_NAME}Config.cmake.in
+               ${CMAKE_CURRENT_BINARY_DIR}/${APP_PACKAGE_NAME}Config.cmake @ONLY)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${APP_PACKAGE_NAME}ConfigVersion.cmake.in
+               ${CMAKE_CURRENT_BINARY_DIR}/${APP_PACKAGE_NAME}ConfigVersion.cmake @ONLY)
