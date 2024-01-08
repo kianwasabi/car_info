@@ -18,8 +18,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(PRJ_SRC_VAR src)
-set(PRJ_SRC_GEN_VAR src-gen)
+set(PRJ_SRC_VAR car_info/src)
+set(PRJ_SRC_GEN_VAR car_info/src-gen)
 set(PRJ_SRC_GEN_PATH ${CMAKE_CURRENT_SOURCE_DIR}/car_info/${PRJ_SRC_GEN_VAR})
 set(CORE_GEN_SRC_DIR ${PRJ_SRC_GEN_PATH}/core)
 set(SOMEIP_GEN_SRC_DIR ${PRJ_SRC_GEN_PATH}/someip)
@@ -122,9 +122,6 @@ write_basic_package_version_file(
     VERSION ${PROJECT_VERSION}
     COMPATIBILITY AnyNewerVersion
 )
-
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/car_info/cmake/${APP_PACKAGE_NAME}Config.cmake.in
-    "${PROJECT_BINARY_DIR}/${APP_PACKAGE_NAME}Config.cmake" @ONLY)
 
 install(FILES
   "${PROJECT_BINARY_DIR}/${APP_PACKAGE_NAME}Config.cmake"
