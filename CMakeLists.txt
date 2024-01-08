@@ -2,7 +2,7 @@
 cmake_minimum_required (VERSION 3.15)
 project(Car_Info VERSION 0.1 LANGUAGES CXX)
 ### PACKAGES ###
-find_package(Python3 COMPONENTS Development)
+find_package(Python310 COMPONENTS Development)
 find_package(Boost REQUIRED COMPONENTS python3)
 find_package(CommonAPI REQUIRED)
 find_package(CommonAPI-SomeIP REQUIRED)
