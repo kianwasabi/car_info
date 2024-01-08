@@ -18,9 +18,9 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(PRJ_SRC_VAR car_info/src)
+set(PRJ_SRC_VAR src)
 set(PRJ_SRC_GEN_VAR src-gen)
-set(PRJ_SRC_GEN_PATH ${CMAKE_CURRENT_SOURCE_DIR}/car_info/${PRJ_SRC_GEN_VAR})
+set(PRJ_SRC_GEN_PATH ${CMAKE_CURRENT_SOURCE_DIR}/${PRJ_SRC_GEN_VAR})
 set(CORE_GEN_SRC_DIR ${PRJ_SRC_GEN_PATH}/core)
 set(SOMEIP_GEN_SRC_DIR ${PRJ_SRC_GEN_PATH}/someip)
 set(CORE_RUNTIME_DIR ~/capicxx-core-runtime)
@@ -28,13 +28,13 @@ set(SOMEIP_RUNTIME_DIR ~/capicxx-someip-runtime)
 set(VSOMEIP_DIR ~/vsomeip)
 set(COMMONAPI_INTERFACE_VER v0/commonapi)
 
-FILE(GLOB PRJ_SOMEIP_LIB_SRCS car_info/src-gen/someip/v0/commonapi/*.cpp)
+FILE(GLOB PRJ_SOMEIP_LIB_SRCS src-gen/someip/v0/commonapi/*.cpp)
 
 ### DIRECTORIES ###
 include_directories(
-	car_info/include
-    car_info/src-gen/core
-    car_info/src-gen/someip
+	include
+    src-gen/core
+    src-gen/someip
 	${Python3_INCLUDE_DIRS}
     ${COMMONAPI_INCLUDE_DIRS}
     ${COMMONAPI_SOMEIP_INCLUDE_DIRS}
@@ -103,10 +103,10 @@ install(TARGETS CarInfoService-someip
         ARCHIVE DESTINATION ${INSTALL_LIB_DIR})
 
 # Headers
-file(GLOB_RECURSE HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/car_info/include/*.hpp")
+file(GLOB_RECURSE HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp")
 foreach(HEADER ${HEADER_FILES})
     get_filename_component(HEADER_ABS_PATH ${HEADER} ABSOLUTE)
-    file(RELATIVE_PATH HEADER_REL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/car_info/include" ${HEADER_ABS_PATH})
+    file(RELATIVE_PATH HEADER_REL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/include" ${HEADER_ABS_PATH})
     get_filename_component(HEADER_DIR ${HEADER_REL_PATH} DIRECTORY)
     install(FILES ${HEADER_ABS_PATH} DESTINATION ${INSTALL_INCLUDE_DIR}/${HEADER_DIR})
 endforeach()
@@ -136,8 +136,8 @@ install(EXPORT ${APP_PACKAGE_NAME}Targets
 
 set(PACKAGE_VERSION ${PROJECT_VERSION})
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/car_info/cmake/${APP_PACKAGE_NAME}Config.cmake.in
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${APP_PACKAGE_NAME}Config.cmake.in
                ${CMAKE_CURRENT_BINARY_DIR}/${APP_PACKAGE_NAME}Config.cmake @ONLY)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/car_info/cmake/${APP_PACKAGE_NAME}ConfigVersion.cmake.in
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${APP_PACKAGE_NAME}ConfigVersion.cmake.in
                ${CMAKE_CURRENT_BINARY_DIR}/${APP_PACKAGE_NAME}ConfigVersion.cmake @ONLY)
