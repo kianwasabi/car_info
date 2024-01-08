@@ -123,7 +123,7 @@ write_basic_package_version_file(
     COMPATIBILITY AnyNewerVersion
 )
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${APP_PACKAGE_NAME}Config.cmake.in
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/car_info/cmake/${APP_PACKAGE_NAME}Config.cmake.in
     "${PROJECT_BINARY_DIR}/${APP_PACKAGE_NAME}Config.cmake" @ONLY)
 
 install(FILES
@@ -139,8 +139,8 @@ install(EXPORT ${APP_PACKAGE_NAME}Targets
 
 set(PACKAGE_VERSION ${PROJECT_VERSION})
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${APP_PACKAGE_NAME}Config.cmake.in
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/car_info/cmake/${APP_PACKAGE_NAME}Config.cmake.in
                ${CMAKE_CURRENT_BINARY_DIR}/${APP_PACKAGE_NAME}Config.cmake @ONLY)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${APP_PACKAGE_NAME}ConfigVersion.cmake.in
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/car_info/cmake/${APP_PACKAGE_NAME}ConfigVersion.cmake.in
                ${CMAKE_CURRENT_BINARY_DIR}/${APP_PACKAGE_NAME}ConfigVersion.cmake @ONLY)
