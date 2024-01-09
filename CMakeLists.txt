@@ -77,22 +77,32 @@ target_link_libraries(CarInfoClient
 add_library(CarInfoService-someip SHARED ${PRJ_SOMEIP_LIB_SRCS})
 target_link_libraries(CarInfoService-someip CommonAPI CommonAPI-SomeIP)
 
+### CONFIGURE CMAKE FILES ###
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CarInfoConfig.cmake.in
+  "${PROJECT_BINARY_DIR}/CarInfoConfig.cmake" @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CarInfoConfigVersion.cmake.in
+  "${PROJECT_BINARY_DIR}/CarInfoConfigVersion.cmake" @ONLY)
+
 ### INSTALLATION PATHS ###
-# .so files installation
+# Shared libraries installation
 install(TARGETS CarInfoService-someip
-        LIBRARY DESTINATION /usr/local/lib)
+        LIBRARY DESTINATION /usr/lib)
 
 # Executable binaries installation
 install(TARGETS CarInfoService CarInfoClient
         RUNTIME DESTINATION /usr/bin)
 
-# .cmake files installation
+# CMake files installation
 install(FILES
-    "${PROJECT_BINARY_DIR}/${APP_PACKAGE_NAME}Config.cmake"
-    "${PROJECT_BINARY_DIR}/${APP_PACKAGE_NAME}ConfigVersion.cmake"
-    DESTINATION /usr/local/lib/cmake)
+  "${PROJECT_BINARY_DIR}/CarInfoConfig.cmake"
+  "${PROJECT_BINARY_DIR}/CarInfoConfigVersion.cmake"
+  DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake")
+
+# Install export set
+install(EXPORT CarInfoTargets
+  DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake")
 
 # Proxy headers installation
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/
-        DESTINATION /usr/local/include/${APP_PACKAGE_NAME}/${PROJECT_VERSION}/${APP_PACKAGE_NAME}
+        DESTINATION /usr/include/${APP_PACKAGE_NAME}/${PROJECT_VERSION}/${APP_PACKAGE_NAME}
         FILES_MATCHING PATTERN "*.hpp")
