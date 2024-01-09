@@ -2,6 +2,7 @@
 #include <string>
 #include <unistd.h>
 #include <cstdlib>
+#include <thread>
 
 #include <CommonAPI/CommonAPI.hpp>
 #include "../src-gen/core/v0/commonapi/CarInfoProxy.hpp"

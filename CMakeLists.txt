@@ -50,7 +50,6 @@ file(GLOB PRJ_SOMEIP_LIB_SRCS "${SOMEIP_GEN_SRC_DIR}/*.cpp")
 ### BUILD TARGETS ###
 # Services
 add_executable(CarInfoService 
-    ${PRJ_SOURCES}
     ${PRJ_SRC_DIR}/PiRacer.cpp
     ${PRJ_SRC_DIR}/CarInfoService.cpp
     ${PRJ_SRC_DIR}/CarInfoStubImpl.cpp
