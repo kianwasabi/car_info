@@ -36,9 +36,9 @@ link_directories(
     ${COMMONAPI_LIBDIR}
     ${COMMONAPI_SOMEIP_CMAKE_DIR}/build
     ${Boost_LIBRARY_DIR}
-    # ${SOMEIP_RUNTIME_DIR}/build
-    # ${CORE_RUNTIME_DIR}/build
-    # ${VSOMEIP_DIR}/build
+    ${SOMEIP_RUNTIME_DIR}/build
+    ${CORE_RUNTIME_DIR}/build
+    ${VSOMEIP_DIR}/build
 )
 
 ### SOURCES ###
