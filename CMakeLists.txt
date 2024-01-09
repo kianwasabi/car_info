@@ -1,7 +1,6 @@
 ### SETUP ###
 cmake_minimum_required (VERSION 3.0)
-set(PROJ_NAME Car_Info)
-project(${PROJ_NAME})
+project(Car_Info VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread -std=c++11")
 
 ### PACKAGES ###
@@ -11,6 +10,11 @@ find_package(CommonAPI REQUIRED)
 find_package(CommonAPI-SomeIP REQUIRED)
 
 ### VARIABLES ###
+## app info 
+set(APP_PACKAGE_NAME commonapi) 
+set(MAJOR_VERSION 0)
+set(MINOR_VERSION 1)
+
 set(PRJ_SRC_VAR src)
 set(PRJ_SRC_GEN_VAR src-gen)
 set(PRJ_SRC_GEN_PATH ${CMAKE_CURRENT_SOURCE_DIR}/${PRJ_SRC_GEN_VAR})
@@ -23,8 +27,8 @@ set(COMMONAPI_INTERFACE_VER v0/commonapi)
 
 set(INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
 set(INSTALL_BIN_DIR bin CACHE PATH "Installation directory for binaries")
-set(INSTALL_INCLUDE_DIR include/CanReceiver CACHE PATH "Installation directory for header files")
-set(DEF_INSTALL_CMAKE_DIR lib/cmake/CanReceiver-someip)
+set(INSTALL_INCLUDE_DIR include/CarInfo CACHE PATH "Installation directory for header files")
+set(DEF_INSTALL_CMAKE_DIR lib/cmake/CarInfo-someip)
 set(INSTALL_CMAKE_DIR ${DEF_INSTALL_CMAKE_DIR} CACHE PATH "Installation directory for CMake files")
 
 foreach(p LIB INCLUDE CMAKE)
