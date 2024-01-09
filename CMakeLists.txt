@@ -15,8 +15,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 ### VARIABLES ###
 set(PRJ_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(PRJ_SRC_GEN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src-gen)
-set(CORE_GEN_SRC_DIR ${PRJ_SRC_GEN_DIR}/core)
-set(SOMEIP_GEN_SRC_DIR ${PRJ_SRC_GEN_DIR}/someip)
+set(CORE_GEN_SRC_DIR ${PRJ_SRC_GEN_DIR}/core/v0/commonapi)
+set(SOMEIP_GEN_SRC_DIR ${PRJ_SRC_GEN_DIR}/someip/v0/commonapi)
+set(CORE_RUNTIME_DIR ~/capicxx-core-runtime)
+set(SOMEIP_RUNTIME_DIR ~/capicxx-someip-runtime)
+set(VSOMEIP_DIR ~/vsomeip)
 
 ### INCLUDE DIRECTORIES ###
 include_directories(
@@ -31,21 +34,44 @@ include_directories(
 ### LINK DIRECTORIES ###
 link_directories(
     ${COMMONAPI_LIBDIR}
+    ${COMMONAPI_SOMEIP_CMAKE_DIR}/build
     ${Boost_LIBRARY_DIR}
+    ${SOMEIP_RUNTIME_DIR}/build
+    ${CORE_RUNTIME_DIR}/build
+    ${VSOMEIP_DIR}/build
 )
 
 ### SOURCES ###
 file(GLOB PRJ_SOURCES "${PRJ_SRC_DIR}/*.cpp")
-file(GLOB PRJ_SOMEIP_LIB_SRCS "${PRJ_SRC_GEN_DIR}/someip/v0/commonapi/*.cpp")
+file(GLOB PRJ_SOMEIP_LIB_SRCS "${SOMEIP_GEN_SRC_DIR}/*.cpp")
 
 ### BUILD TARGETS ###
 # Services
-add_executable(CarInfoService ${PRJ_SOURCES})
-target_link_libraries(CarInfoService CommonAPI CommonAPI-SomeIP Python3::Python Boost::python)
+add_executable(CarInfoService 
+    ${PRJ_SOURCES}
+    ${PRJ_SRC_DIR}/PiRacer.cpp
+    ${PRJ_SRC_DIR}/CarInfoService.cpp
+    ${PRJ_SRC_DIR}/CarInfoStubImpl.cpp
+)
+target_link_libraries(CarInfoService 
+    CommonAPI 
+    CommonAPI-SomeIP 
+    vsomeip3
+    Python3::Python 
+    Boost::python
+)
 
 # Client 
-add_executable(CarInfoClient ${PRJ_SRC_DIR}/CarInfoClient.cpp)
-target_link_libraries(CarInfoClient CommonAPI CommonAPI-SomeIP)
+add_executable(CarInfoClient
+    ${PRJ_SRC_DIR}/CarInfoClient.cpp
+    ${SOMEIP_GEN_SRC_DIR}/CarInfoSomeIPProxy.cpp
+    ${SOMEIP_GEN_SRC_DIR}/CarInfoSomeIPDeployment.cpp
+)
+target_link_libraries(CarInfoClient 
+    CommonAPI 
+    CommonAPI-SomeIP 
+    vsomeip3
+)
 
 add_library(CarInfoService-someip SHARED ${PRJ_SOMEIP_LIB_SRCS})
 target_link_libraries(CarInfoService-someip CommonAPI CommonAPI-SomeIP)
