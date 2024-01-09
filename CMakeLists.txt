@@ -24,8 +24,8 @@ set(VSOMEIP_DIR ~/vsomeip)
 ### INCLUDE DIRECTORIES ###
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${CORE_GEN_SRC_DIR}
-    ${SOMEIP_GEN_SRC_DIR}
+    ${PRJ_SRC_GEN_DIR}/core
+    ${PRJ_SRC_GEN_DIR}/someip
     ${Python3_INCLUDE_DIRS}
     ${COMMONAPI_INCLUDE_DIRS}
     ${COMMONAPI_SOMEIP_INCLUDE_DIRS}
@@ -44,6 +44,7 @@ link_directories(
 ### SOURCES ###
 file(GLOB PRJ_SOURCES "${PRJ_SRC_DIR}/*.cpp")
 file(GLOB PRJ_SOMEIP_LIB_SRCS "${SOMEIP_GEN_SRC_DIR}/*.cpp")
+
 
 ### BUILD TARGETS ###
 # Services
