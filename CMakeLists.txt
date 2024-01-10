@@ -87,14 +87,14 @@ target_include_directories(CarInfoService-someip PUBLIC
 
 ### INSTALLATION ###
 install(TARGETS CarInfoService
-    RUNTIME DESTINATION ${INSTALL_BIN_DIR}
     EXPORT CarInfoServiceTargets
+    RUNTIME DESTINATION ${INSTALL_BIN_DIR}
 )
 
 install(TARGETS CarInfoService-someip
+    EXPORT CarInfoService-someipTargets
     LIBRARY DESTINATION ${INSTALL_LIB_DIR}
     ARCHIVE DESTINATION ${INSTALL_LIB_DIR}
-    EXPORT CarInfoService-someipTargets
 )
 
 file(GLOB_RECURSE HEADER_FILES "src-gen/core/v${MAJOR_VERSION}/${APP_PACKAGE_NAME}/*Proxy*.hpp")
