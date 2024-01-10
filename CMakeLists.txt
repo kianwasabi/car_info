@@ -115,9 +115,9 @@ export(PACKAGE CarInfo-someip)
 
 # Create the CarInfo-someipConfig.cmake and CarInfo-someipConfigVersion files
 file(RELATIVE_PATH REL_INCLUDE_DIR "${ABSOLUTE_INSTALL_CMAKE_DIR}" "${ABSOLUTE_INSTALL_INCLUDE_DIR}")
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/car_control/cmake/CarInfo-someipConfig.cmake.in
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CarInfo-someipConfig.cmake.in
   "${PROJECT_BINARY_DIR}/CarInfo-someipConfig.cmake" @ONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/car_control/cmake/CarInfo-someipConfigVersion.cmake.in
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CarInfo-someipConfigVersion.cmake.in
   "${PROJECT_BINARY_DIR}/CarInfo-someipConfigVersion.cmake" @ONLY)
 
 install(FILES
