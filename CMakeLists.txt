@@ -32,7 +32,7 @@ foreach(p LIB INCLUDE CMAKE)
 endforeach()
 
 set(Car_Info_SOURCES
-    src/CarInfo.cpp
+    src/CarInfoService.cpp
     src/CarInfoStubImpl.cpp
     src/PiRacer.cpp
 )
