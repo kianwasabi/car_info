@@ -20,8 +20,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 ### INSTALLATION DIRECTORIES ###
 set(INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
 set(INSTALL_BIN_DIR bin CACHE PATH "Installation directory for binaries")
-set(INSTALL_INCLUDE_DIR include/CarInfoService CACHE PATH "Installation directory for header files")
-set(DEF_INSTALL_CMAKE_DIR lib/cmake/CarInfoService-someip)
+set(INSTALL_INCLUDE_DIR include/CarInfo CACHE PATH "Installation directory for header files")
+set(DEF_INSTALL_CMAKE_DIR lib/cmake/CarInfo-someip)
 set(INSTALL_CMAKE_DIR ${DEF_INSTALL_CMAKE_DIR} CACHE PATH "Installation directory for CMake files")
 
 foreach(p LIB INCLUDE CMAKE)
@@ -32,7 +32,7 @@ foreach(p LIB INCLUDE CMAKE)
 endforeach()
 
 set(Car_Info_SOURCES
-    src/CarInfoService.cpp
+    src/CarInfo.cpp
     src/CarInfoStubImpl.cpp
     src/PiRacer.cpp
 )
@@ -57,9 +57,9 @@ link_directories(
 )
 
 ### BUILD TARGETS ###
-# Service
-add_executable(CarInfoService ${Car_Info_SOURCES})
-target_link_libraries(CarInfoService 
+# 
+add_executable(CarInfo ${Car_Info_SOURCES})
+target_link_libraries(CarInfo 
     CommonAPI 
     CommonAPI-SomeIP 
     vsomeip3
@@ -67,18 +67,18 @@ target_link_libraries(CarInfoService
     Boost::python3
 )
 
-add_library(CarInfoService-someip SHARED ${PRJ_SOMEIP_LIB_SRCS})
-target_link_libraries(CarInfoService-someip
+add_library(CarInfo-someip SHARED ${PRJ_SOMEIP_LIB_SRCS})
+target_link_libraries(CarInfo-someip
     CommonAPI
     CommonAPI-SomeIP
 )
 
-set_target_properties(CarInfoService-someip PROPERTIES 
+set_target_properties(CarInfo-someip PROPERTIES 
     VERSION ${MAJOR_VERSION}.${MINOR_VERSION} 
     SOVERSION ${MAJOR_VERSION}.${MINOR_VERSION}
 )
 
-target_include_directories(CarInfoService-someip PUBLIC
+target_include_directories(CarInfo-someip PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src-gen/core>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src-gen/someip>
@@ -86,13 +86,13 @@ target_include_directories(CarInfoService-someip PUBLIC
 )
 
 ### INSTALLATION ###
-install(TARGETS CarInfoService
-    EXPORT CarInfoServiceTargets
+install(TARGETS CarInfo
+    EXPORT CarInfoTargets
     RUNTIME DESTINATION ${INSTALL_BIN_DIR}
 )
 
-install(TARGETS CarInfoService-someip
-    EXPORT CarInfoService-someipTargets
+install(TARGETS CarInfo-someip
+    EXPORT CarInfo-someipTargets
     LIBRARY DESTINATION ${INSTALL_LIB_DIR}
     ARCHIVE DESTINATION ${INSTALL_LIB_DIR}
 )
@@ -106,7 +106,7 @@ foreach(HEADER ${HEADER_FILES})
 endforeach()
 
 ### EXPORT TARGETS ###
-export(TARGETS CarInfoService-someip
+export(TARGETS CarInfo-someip
   FILE "${PROJECT_BINARY_DIR}/CarInfo-someipTargets.cmake"
 )
 
@@ -125,7 +125,7 @@ install(FILES
 )
 
 ### INSTALL EXPORT TARGETS ###
-install(EXPORT CarInfoService-someipTargets
-  FILE CarInfoService-someipTargets.cmake
+install(EXPORT CarInfo-someipTargets
+  FILE CarInfo-someipTargets.cmake
   DESTINATION ${INSTALL_CMAKE_DIR}
 )
