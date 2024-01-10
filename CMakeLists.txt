@@ -8,7 +8,7 @@ find_package(CommonAPI REQUIRED)
 find_package(CommonAPI-SomeIP REQUIRED)
 
 ### VARIABLES ###
-set(APP_PACKAGE_NAME CarInfo-someip)
+set(APP_PACKAGE_NAME commonapi)
 set(MAJOR_VERSION 0)
 set(MINOR_VERSION 1)
 
