@@ -97,7 +97,7 @@ install(TARGETS CarInfoService-someip
     ARCHIVE DESTINATION ${INSTALL_LIB_DIR}
 )
 
-file(GLOB_RECURSE HEADER_FILES "src-gen/core/v${MAJOR_VERSION}/${APP_PACKAGE_NAME}/*Proxy*.hpp")
+file(GLOB_RECURSE HEADER_FILES "src-gen/core/v${MAJOR_VERSION}/${APP_PACKAGE_NAME}/*.hpp")
 foreach(HEADER ${HEADER_FILES})
     get_filename_component(HEADER_ABS_PATH ${HEADER} ABSOLUTE)
     file(RELATIVE_PATH HEADER_REL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/src-gen/core" ${HEADER_ABS_PATH})
