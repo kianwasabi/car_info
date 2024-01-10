@@ -95,6 +95,7 @@ install(TARGETS CarInfoService
 install(TARGETS CarInfoService-someip
         LIBRARY DESTINATION ${INSTALL_LIB_DIR}
         ARCHIVE DESTINATION ${INSTALL_LIB_DIR}
+        EXPORT CarInfo-someipTargets
 )
 
 file(GLOB_RECURSE HEADER_FILES "src-gen/core/v${MAJOR_VERSION}/${APP_PACKAGE_NAME}/*Proxy*.hpp")
@@ -127,6 +128,7 @@ install(FILES
 )
 
 install(EXPORT CarInfo-someipTargets
+  FILE CarInfo-someipTargets.cmake
   DESTINATION "${INSTALL_CMAKE_DIR}"
 )
 
