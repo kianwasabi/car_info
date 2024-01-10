@@ -58,9 +58,7 @@ link_directories(
 
 ### BUILD TARGETS ###
 # Service
-add_executable(CarInfoService 
-    ${Car_Info_SOURCES}
-)
+add_executable(CarInfoService ${Car_Info_SOURCES})
 target_link_libraries(CarInfoService 
     CommonAPI 
     CommonAPI-SomeIP 
@@ -68,9 +66,8 @@ target_link_libraries(CarInfoService
     Python3::Python 
     Boost::python3
 )
-add_library(CarInfoService-someip
-    SHARED ${PRJ_SOMEIP_LIB_SRCS}
-)
+
+add_library(CarInfoService-someip SHARED ${PRJ_SOMEIP_LIB_SRCS})
 target_link_libraries(CarInfoService-someip
     CommonAPI
     CommonAPI-SomeIP
@@ -90,14 +87,14 @@ target_include_directories(CarInfoService-someip PUBLIC
 
 ### INSTALLATION ###
 install(TARGETS CarInfoService
-        RUNTIME DESTINATION ${INSTALL_BIN_DIR}
-        EXPORT CarInfoServiceTargets
-        
+    RUNTIME DESTINATION ${INSTALL_BIN_DIR}
+    EXPORT CarInfoServiceTargets
 )
+
 install(TARGETS CarInfoService-someip
-        LIBRARY DESTINATION ${INSTALL_LIB_DIR}
-        ARCHIVE DESTINATION ${INSTALL_LIB_DIR}
-        EXPORT CarInfoService-someipTargets
+    LIBRARY DESTINATION ${INSTALL_LIB_DIR}
+    ARCHIVE DESTINATION ${INSTALL_LIB_DIR}
+    EXPORT CarInfoService-someipTargets
 )
 
 file(GLOB_RECURSE HEADER_FILES "src-gen/core/v${MAJOR_VERSION}/${APP_PACKAGE_NAME}/*Proxy*.hpp")
@@ -108,44 +105,27 @@ foreach(HEADER ${HEADER_FILES})
     install(FILES ${HEADER_ABS_PATH} DESTINATION ${INSTALL_INCLUDE_DIR}/${HEADER_DIR})
 endforeach()
 
-# Add all targets to the build-tree export set
+### EXPORT TARGETS ###
 export(TARGETS CarInfoService-someip
   FILE "${PROJECT_BINARY_DIR}/CarInfo-someipTargets.cmake"
 )
 
-# Export the package for use from the build-tree
-export(PACKAGE CarInfo-someip)
-
-# Create the CarInfo-someipConfig.cmake and CarInfo-someipConfigVersion files
+### CONFIGURE FILES ###
 file(RELATIVE_PATH REL_INCLUDE_DIR "${ABSOLUTE_INSTALL_CMAKE_DIR}" "${ABSOLUTE_INSTALL_INCLUDE_DIR}")
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CarInfo-someipConfig.cmake.in
   "${PROJECT_BINARY_DIR}/CarInfo-someipConfig.cmake" @ONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CarInfo-someipConfigVersion.cmake.in
   "${PROJECT_BINARY_DIR}/CarInfo-someipConfigVersion.cmake" @ONLY)
 
+### INSTALL CONFIGURATION FILES ###
 install(FILES
   "${PROJECT_BINARY_DIR}/CarInfo-someipConfig.cmake"
   "${PROJECT_BINARY_DIR}/CarInfo-someipConfigVersion.cmake"
-  DESTINATION "${INSTALL_CMAKE_DIR}"
+  DESTINATION ${INSTALL_CMAKE_DIR}
 )
 
-install(EXPORT CarInfo-someipTargets
-  FILE CarInfo-someipTargets.cmake
-  DESTINATION "${INSTALL_CMAKE_DIR}"
+### INSTALL EXPORT TARGETS ###
+install(EXPORT CarInfoService-someipTargets
+  FILE CarInfoService-someipTargets.cmake
+  DESTINATION ${INSTALL_CMAKE_DIR}
 )
-
-
-
-
-# # Client
-# add_executable(CarInfoClient 
-#     src/CarInfoClient.cpp
-# )
-# target_link_libraries(CarInfoClient 
-#     CommonAPI 
-#     CommonAPI-SomeIP 
-#     vsomeip3
-# )
-# target_include_directories(CarInfoClient PRIVATE ${PRJ_INCLUDE_DIR})
-
-
