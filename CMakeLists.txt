@@ -91,7 +91,7 @@ target_include_directories(CarInfo-someip PUBLIC
 set_target_properties (CarInfo-someip PROPERTIES INTERFACE_LINK_LIBRARY "")
 
 ### INSTALL ###
-file(GLOB_RECURSE HEADER_FILES "src-gen/core/v${MAJOR_VERSION}/${APP_PACKAGE_NAME}/*Proxy*.hpp")
+file(GLOB_RECURSE HEADER_FILES "src-gen/core/v${MAJOR_VERSION}/${APP_PACKAGE_NAME}/*.hpp")
 foreach(HEADER ${HEADER_FILES})
     # Get absolute path of header files.
     get_filename_component(HEADER_ABS_PATH ${HEADER} ABSOLUTE)
