@@ -91,6 +91,8 @@ target_include_directories(CarInfoService-someip PUBLIC
 ### INSTALLATION ###
 install(TARGETS CarInfoService
         RUNTIME DESTINATION ${INSTALL_BIN_DIR}
+        EXPORT CarInfoTargets
+        
 )
 install(TARGETS CarInfoService-someip
         LIBRARY DESTINATION ${INSTALL_LIB_DIR}
