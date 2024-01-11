@@ -1,7 +1,6 @@
 ### SETUP ###
-cmake_minimum_required (VERSION 3.0)
+cmake_minimum_required (VERSION 3.15)
 project(Car_Info VERSION 0.1 LANGUAGES CXX)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread -std=c++11")
 
 ### PACKAGES ###
 find_package(Python3 COMPONENTS Development)
@@ -10,20 +9,16 @@ find_package(CommonAPI REQUIRED)
 find_package(CommonAPI-SomeIP REQUIRED)
 
 ### VARIABLES ###
-## app info 
-set(APP_PACKAGE_NAME commonapi) 
+set(APP_PACKAGE_NAME commonapi)
 set(MAJOR_VERSION 0)
 set(MINOR_VERSION 1)
 
-set(PRJ_SRC_VAR src)
-set(PRJ_SRC_GEN_VAR src-gen)
-set(PRJ_SRC_GEN_PATH ${CMAKE_CURRENT_SOURCE_DIR}/${PRJ_SRC_GEN_VAR})
-set(CORE_GEN_SRC_DIR ${PRJ_SRC_GEN_PATH}/core)
-set(SOMEIP_GEN_SRC_DIR ${PRJ_SRC_GEN_PATH}/someip)
-set(CORE_RUNTIME_DIR ~/capicxx-core-runtime)
-set(SOMEIP_RUNTIME_DIR ~/capicxx-someip-runtime)
-set(VSOMEIP_DIR ~/vsomeip)
-set(COMMONAPI_INTERFACE_VER v0/commonapi)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread -std=c++11")
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+### INSTALLATION DIRECTORIES ###
 
 set(INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
 set(INSTALL_BIN_DIR bin CACHE PATH "Installation directory for binaries")
@@ -38,100 +33,96 @@ foreach(p LIB INCLUDE CMAKE)
   endif()
 endforeach()
 
-FILE(GLOB PRJ_SOMEIP_LIB_SRCS ./src-gen/someip/v0/commonapi/*.cpp)
 
-### DIRECTORIES ###
+set(Car_Info_SOURCES
+    src/CarInfoService.cpp
+    src/CarInfoStubImpl.cpp
+    src/PiRacer.cpp
+)
+
+FILE(GLOB PRJ_SOMEIP_LIB_SRCS ./src-gen/someip/v${MAJOR_VERSION}/${APP_PACKAGE_NAME}/*.cpp)
+
+### INCLUDE AND LINK DIRECTORIES ###
 include_directories(
-	./include
+    ./include
     ./src-gen/core
     ./src-gen/someip
-	${Python3_INCLUDE_DIRS}
+    ${Boost_INCLUDE_DIRS}
+    ${Python3_INCLUDE_DIRS}
     ${COMMONAPI_INCLUDE_DIRS}
     ${COMMONAPI_SOMEIP_INCLUDE_DIRS}
 )
-
 link_directories(
+    ${Boost_LIBRARY_DIR}
+    ${Python3_LIBRARY_DIRS}
     ${COMMONAPI_LIBDIR}
     ${COMMONAPI_SOMEIP_CMAKE_DIR}/build
-    ${Boost_LIBRARY_DIR}
-    # ${SOMEIP_RUNTIME_DIR}/build
-    # ${CORE_RUNTIME_DIR}/build
-    # ${VSOMEIP_DIR}/build
 )
 
-### BUILD ###
-# Services
-add_executable(CarInfo
-    ${PRJ_SRC_VAR}/PiRacer.cpp
-    ${PRJ_SRC_VAR}/CarInfoService.cpp
-    ${PRJ_SRC_VAR}/CarInfoStubImpl.cpp
-)
-target_link_libraries(CarInfo
+### BUILD TARGETS ###
+# 
+add_executable(CarInfo ${Car_Info_SOURCES})
+target_link_libraries(CarInfo 
     CommonAPI 
     CommonAPI-SomeIP 
     vsomeip3
     Python3::Python 
-    Boost::python
+    Boost::python3
 )
 
-add_library(CarInfo-someip
-    SHARED ${PRJ_SOMEIP_LIB_SRCS}
-)
+add_library(CarInfo-someip SHARED ${PRJ_SOMEIP_LIB_SRCS})
+
 target_link_libraries(CarInfo-someip
     CommonAPI
     CommonAPI-SomeIP
 )
-set_target_properties(CarInfo-someip PROPERTIES VERSION ${MAJOR_VERSION}.${MINOR_VERSION} SOVERSION ${MAJOR_VERSION}.${MINOR_VERSION})
+set_target_properties(CarInfo-someip PROPERTIES 
+    VERSION ${MAJOR_VERSION}.${MINOR_VERSION} 
+    SOVERSION ${MAJOR_VERSION}.${MINOR_VERSION}
+)
+
 target_include_directories(CarInfo-someip PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src-gen/core>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src-gen/someip>
     $<INSTALL_INTERFACE:${INSTALL_INCLUDE_DIR}>
 )
-set_target_properties (CarInfo-someip PROPERTIES INTERFACE_LINK_LIBRARY "")
 
-### INSTALL ###
-file(GLOB_RECURSE HEADER_FILES "src-gen/core/v${MAJOR_VERSION}/${APP_PACKAGE_NAME}/*.hpp")
-foreach(HEADER ${HEADER_FILES})
-    # Get absolute path of header files.
-    get_filename_component(HEADER_ABS_PATH ${HEADER} ABSOLUTE)
-
-    # Get relative path of header files.
-    file(RELATIVE_PATH HEADER_REL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/src-gen/core" ${HEADER_ABS_PATH})
-
-    # Get directory name from file name.
-    get_filename_component(HEADER_DIR ${HEADER_REL_PATH} DIRECTORY)
-
-    # Install headers to desired directory.
-    install(FILES ${HEADER_ABS_PATH} DESTINATION ${INSTALL_INCLUDE_DIR}/${HEADER_DIR})
-endforeach()
-
+### INSTALLATION ###
 install(TARGETS CarInfo
-        EXPORT CarInfoTargets
-        LIBRARY DESTINATION ${INSTALL_LIB_DIR}
-        RUNTIME DESTINATION ${INSTALL_BIN_DIR}
-        ARCHIVE DESTINATION ${INSTALL_LIB_DIR}
-        PUBLIC_HEADER DESTINATION "${INSTALL_INCLUDE_DIR}"
+    EXPORT CarInfoTargets
+    RUNTIME DESTINATION ${INSTALL_BIN_DIR}
 )
 
 install(TARGETS CarInfo-someip
-        EXPORT CarInfo-someipTargets
-        LIBRARY DESTINATION ${INSTALL_LIB_DIR}
-        RUNTIME DESTINATION ${INSTALL_BIN_DIR}
-        ARCHIVE DESTINATION ${INSTALL_LIB_DIR}
-        PUBLIC_HEADER DESTINATION "${INSTALL_INCLUDE_DIR}"
+    EXPORT CarInfo-someipTargets
+    LIBRARY DESTINATION ${INSTALL_LIB_DIR}
+    ARCHIVE DESTINATION ${INSTALL_LIB_DIR}
 )
 
-# Add all targets to the build-tree export set
+## Piracer files ##
+file(GLOB_RECURSE PIRACER_FILES "./piracer/*.py")
+foreach(PIRACER_FILE ${PIRACER_FILES})
+    get_filename_component(PIRACER_FILE_ABS_PATH ${PIRACER_FILE} ABSOLUTE)                         # Get absolute path of files.
+    file(RELATIVE_PATH PIRACER_FILE_REL_PATH ${CMAKE_CURRENT_SOURCE_DIR}/piracer ${PIRACER_FILE_ABS_PATH}) # Get relative path of files.
+    get_filename_component(PIRACER_FILE_DIR ${PIRACER_FILE_REL_PATH} DIRECTORY)                    # Get directory name from file name.
+    install(FILES ${PIRACER_FILE_ABS_PATH} DESTINATION ${INSTALL_PIRACER_DIR}/CarInfo) # Install to desired directory.
+endforeach()
+
+file(GLOB_RECURSE HEADER_FILES "src-gen/core/v${MAJOR_VERSION}/${APP_PACKAGE_NAME}/*.hpp")
+foreach(HEADER ${HEADER_FILES})
+    get_filename_component(HEADER_ABS_PATH ${HEADER} ABSOLUTE)
+    file(RELATIVE_PATH HEADER_REL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/src-gen/core" ${HEADER_ABS_PATH})
+    get_filename_component(HEADER_DIR ${HEADER_REL_PATH} DIRECTORY)
+    install(FILES ${HEADER_ABS_PATH} DESTINATION ${INSTALL_INCLUDE_DIR}/${HEADER_DIR})
+endforeach()
+
+### EXPORT TARGETS ###
 export(TARGETS CarInfo-someip
   FILE "${PROJECT_BINARY_DIR}/CarInfo-someipTargets.cmake"
 )
 
-# Export the package for use from the build-tree
-# (this registers the build-tree with a global CMake-registry)
-export(PACKAGE CarInfo-someip)
-
-# Create the CarInfo-someipConfig.cmake and CarInfo-someipConfigVersion files ...
+### CONFIGURE FILES ###
 file(RELATIVE_PATH REL_INCLUDE_DIR "${ABSOLUTE_INSTALL_CMAKE_DIR}" "${ABSOLUTE_INSTALL_INCLUDE_DIR}")
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CarInfo-someipConfig.cmake.in
@@ -139,12 +130,17 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CarInfo-someipConfig.cmake.in
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CarInfo-someipConfigVersion.cmake.in
   "${PROJECT_BINARY_DIR}/CarInfo-someipConfigVersion.cmake" @ONLY)
 
+
+### INSTALL CONFIGURATION FILES ###
 install(FILES
   "${PROJECT_BINARY_DIR}/CarInfo-someipConfig.cmake"
   "${PROJECT_BINARY_DIR}/CarInfo-someipConfigVersion.cmake"
-  DESTINATION "${INSTALL_CMAKE_DIR}"
+  DESTINATION ${INSTALL_CMAKE_DIR}
 )
 
+### INSTALL EXPORT TARGETS ###
 install(EXPORT CarInfo-someipTargets
-  DESTINATION "${INSTALL_CMAKE_DIR}"
+  FILE CarInfo-someipTargets.cmake
+  DESTINATION ${INSTALL_CMAKE_DIR}
 )
+
