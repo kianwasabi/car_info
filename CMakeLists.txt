@@ -97,6 +97,15 @@ install(TARGETS CarInfo-someip
     ARCHIVE DESTINATION ${INSTALL_LIB_DIR}
 )
 
+## Piracer files ##
+file(GLOB_RECURSE PIRACER_FILES "./piracer/*.py")
+foreach(PIRACER_FILE ${PIRACER_FILES})
+    get_filename_component(PIRACER_FILE_ABS_PATH ${PIRACER_FILE} ABSOLUTE)                         # Get absolute path of files.
+    file(RELATIVE_PATH PIRACER_FILE_REL_PATH ${CMAKE_CURRENT_SOURCE_DIR}/piracer ${PIRACER_FILE_ABS_PATH}) # Get relative path of files.
+    get_filename_component(PIRACER_FILE_DIR ${PIRACER_FILE_REL_PATH} DIRECTORY)                    # Get directory name from file name.
+    install(FILES ${PIRACER_FILE_ABS_PATH} DESTINATION ${INSTALL_PIRACER_DIR}/CarInfo) # Install to desired directory.
+endforeach()
+
 file(GLOB_RECURSE HEADER_FILES "src-gen/core/v${MAJOR_VERSION}/${APP_PACKAGE_NAME}/*.hpp")
 foreach(HEADER ${HEADER_FILES})
     get_filename_component(HEADER_ABS_PATH ${HEADER} ABSOLUTE)
