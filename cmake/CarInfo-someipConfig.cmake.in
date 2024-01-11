@@ -1,3 +1,4 @@
+
 # Config file for the CarInfo-someip package
 # Exports the following targets:
 #   CarInfoService - CMake target for the CarInfoService executable
@@ -9,6 +10,7 @@
 get_filename_component(CARINFO_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
 
 # Our library dependencies (contains definitions for IMPORTED targets)
+
 include("${CARINFO_CMAKE_DIR}/CarInfoTargets.cmake")
 
 # Set the version of the package
@@ -19,3 +21,4 @@ set(CARINFO_VERSION_STRING @PACKAGE_VERSION@)
 get_target_property(CARINFO_INCLUDE_DIRS CarInfoService INTERFACE_INCLUDE_DIRECTORIES)
 
 # Other necessary configurations can be added here
+

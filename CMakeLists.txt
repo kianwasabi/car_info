@@ -1,3 +1,4 @@
+### SETUP ###
 cmake_minimum_required (VERSION 3.15)
 project(Car_Info VERSION 0.1 LANGUAGES CXX)
 
@@ -18,6 +19,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 ### INSTALLATION DIRECTORIES ###
+
 set(INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
 set(INSTALL_BIN_DIR bin CACHE PATH "Installation directory for binaries")
 set(INSTALL_INCLUDE_DIR include/CarInfo CACHE PATH "Installation directory for header files")
@@ -30,6 +32,7 @@ foreach(p LIB INCLUDE CMAKE)
     set(ABSOLUTE_${var} "${CMAKE_INSTALL_PREFIX}/${${var}}")
   endif()
 endforeach()
+
 
 set(Car_Info_SOURCES
     src/CarInfoService.cpp
@@ -68,11 +71,11 @@ target_link_libraries(CarInfo
 )
 
 add_library(CarInfo-someip SHARED ${PRJ_SOMEIP_LIB_SRCS})
+
 target_link_libraries(CarInfo-someip
     CommonAPI
     CommonAPI-SomeIP
 )
-
 set_target_properties(CarInfo-someip PROPERTIES 
     VERSION ${MAJOR_VERSION}.${MINOR_VERSION} 
     SOVERSION ${MAJOR_VERSION}.${MINOR_VERSION}
@@ -121,10 +124,12 @@ export(TARGETS CarInfo-someip
 
 ### CONFIGURE FILES ###
 file(RELATIVE_PATH REL_INCLUDE_DIR "${ABSOLUTE_INSTALL_CMAKE_DIR}" "${ABSOLUTE_INSTALL_INCLUDE_DIR}")
+
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CarInfo-someipConfig.cmake.in
   "${PROJECT_BINARY_DIR}/CarInfo-someipConfig.cmake" @ONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CarInfo-someipConfigVersion.cmake.in
   "${PROJECT_BINARY_DIR}/CarInfo-someipConfigVersion.cmake" @ONLY)
+
 
 ### INSTALL CONFIGURATION FILES ###
 install(FILES
@@ -138,3 +143,4 @@ install(EXPORT CarInfo-someipTargets
   FILE CarInfo-someipTargets.cmake
   DESTINATION ${INSTALL_CMAKE_DIR}
 )
+
