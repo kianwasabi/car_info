@@ -15,7 +15,6 @@
 
 
 
-#include <v0/commonapi/CommonTypes.hpp>
 
 #include <v0/commonapi/CarInfo.hpp>
 
@@ -53,7 +52,7 @@ class CarInfoStubAdapter
       public virtual CarInfo {
  public:
     ///Notifies all remote listeners about a change of value of the attribute battery.
-    virtual void fireBatteryAttributeChanged(const ::v0::commonapi::CommonTypes::batteryStruct &battery) = 0;
+    virtual void fireBatteryAttributeChanged(const ::v0::commonapi::CarInfo::batteryStruct &battery) = 0;
 
 
     virtual void deactivateManagedInstances() = 0;
@@ -113,9 +112,9 @@ public:
     virtual const CommonAPI::Version& getInterfaceVersion(std::shared_ptr<CommonAPI::ClientId> _client) = 0;
 
     /// Provides getter access to the attribute battery
-    virtual const ::v0::commonapi::CommonTypes::batteryStruct &getBatteryAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) = 0;
+    virtual const ::v0::commonapi::CarInfo::batteryStruct &getBatteryAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) = 0;
     /// sets attribute with the given value and propagates it to the adapter
-    virtual void fireBatteryAttributeChanged(::v0::commonapi::CommonTypes::batteryStruct _value) {
+    virtual void fireBatteryAttributeChanged(::v0::commonapi::CarInfo::batteryStruct _value) {
     auto stubAdapter = CommonAPI::Stub<CarInfoStubAdapter, CarInfoStubRemoteEvent>::stubAdapter_.lock();
     if (stubAdapter)
         stubAdapter->fireBatteryAttributeChanged(_value);

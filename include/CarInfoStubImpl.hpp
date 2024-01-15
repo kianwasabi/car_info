@@ -3,7 +3,6 @@
 
 #include <CommonAPI/CommonAPI.hpp>
 #include "../src-gen/core/v0/commonapi/CarInfoStubDefault.hpp"
-#include "../src-gen/core/v0/commonapi/CommonTypes.hpp"
 
 #include "PiRacer.hpp"
 #include <Python.h>

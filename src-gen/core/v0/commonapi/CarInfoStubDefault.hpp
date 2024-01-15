@@ -60,14 +60,14 @@ public:
         return &remoteEventHandler_;
     }
 
-    COMMONAPI_EXPORT virtual const ::v0::commonapi::CommonTypes::batteryStruct &getBatteryAttribute() {
+    COMMONAPI_EXPORT virtual const ::v0::commonapi::CarInfo::batteryStruct &getBatteryAttribute() {
         return batteryAttributeValue_;
     }
-    COMMONAPI_EXPORT virtual const ::v0::commonapi::CommonTypes::batteryStruct &getBatteryAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) {
+    COMMONAPI_EXPORT virtual const ::v0::commonapi::CarInfo::batteryStruct &getBatteryAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) {
         (void)_client;
         return getBatteryAttribute();
     }
-    COMMONAPI_EXPORT virtual void setBatteryAttribute(::v0::commonapi::CommonTypes::batteryStruct _value) {
+    COMMONAPI_EXPORT virtual void setBatteryAttribute(::v0::commonapi::CarInfo::batteryStruct _value) {
         const bool valueChanged = trySetBatteryAttribute(std::move(_value));
         if (valueChanged) {
             fireBatteryAttributeChanged(batteryAttributeValue_);
@@ -76,7 +76,7 @@ public:
 
 
 protected:
-    COMMONAPI_EXPORT virtual bool trySetBatteryAttribute(::v0::commonapi::CommonTypes::batteryStruct _value) {
+    COMMONAPI_EXPORT virtual bool trySetBatteryAttribute(::v0::commonapi::CarInfo::batteryStruct _value) {
         if (!validateBatteryAttributeRequestedValue(_value))
             return false;
 
@@ -94,7 +94,7 @@ protected:
 
        return valueChanged;
     }
-    COMMONAPI_EXPORT virtual bool validateBatteryAttributeRequestedValue(const ::v0::commonapi::CommonTypes::batteryStruct &_value) {
+    COMMONAPI_EXPORT virtual bool validateBatteryAttributeRequestedValue(const ::v0::commonapi::CarInfo::batteryStruct &_value) {
         (void)_value;
         return true;
     }
@@ -114,7 +114,7 @@ protected:
 
 private:
 
-    ::v0::commonapi::CommonTypes::batteryStruct batteryAttributeValue_ {};
+    ::v0::commonapi::CarInfo::batteryStruct batteryAttributeValue_ {};
 
     CommonAPI::Version interfaceVersion_;
 };
