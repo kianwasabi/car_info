@@ -11,7 +11,6 @@
 #ifndef V0_COMMONAPI_Car_Info_SOMEIP_DEPLOYMENT_HPP_
 #define V0_COMMONAPI_Car_Info_SOMEIP_DEPLOYMENT_HPP_
 
-#include <v0/commonapi/CommonTypesSomeIPDeployment.hpp>
 
 #if !defined (COMMONAPI_INTERNAL_COMPILATION)
 #define COMMONAPI_INTERNAL_COMPILATION
@@ -28,6 +27,12 @@ namespace commonapi {
 namespace CarInfo_ {
 
 // Interface-specific deployment types
+typedef CommonAPI::SomeIP::StructDeployment<
+    CommonAPI::EmptyDeployment,
+    CommonAPI::EmptyDeployment,
+    CommonAPI::EmptyDeployment,
+    CommonAPI::EmptyDeployment
+> batteryStructDeployment_t;
 
 // Type-specific deployments
 

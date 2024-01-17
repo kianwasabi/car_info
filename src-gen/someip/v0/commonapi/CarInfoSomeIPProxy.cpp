@@ -47,7 +47,7 @@ CarInfoSomeIPProxy::CarInfoSomeIPProxy(
     const CommonAPI::SomeIP::Address &_address,
     const std::shared_ptr<CommonAPI::SomeIP::ProxyConnection> &_connection)
         : CommonAPI::SomeIP::Proxy(_address, _connection),
-          battery_(*this, CommonAPI::SomeIP::eventgroup_id_t(0x13ec), CommonAPI::SomeIP::event_id_t(0xc738), CommonAPI::SomeIP::method_id_t(0x13ed), true, CommonAPI::SomeIP::reliability_type_e::RT_RELIABLE, false, static_cast< ::v0::commonapi::CommonTypes_::batteryStructDeployment_t* >(nullptr))
+          battery_(*this, CommonAPI::SomeIP::eventgroup_id_t(0x13ec), CommonAPI::SomeIP::event_id_t(0xc738), CommonAPI::SomeIP::method_id_t(0x13ed), true, CommonAPI::SomeIP::reliability_type_e::RT_RELIABLE, false, static_cast< ::v0::commonapi::CarInfo_::batteryStructDeployment_t* >(nullptr))
 {
 }
 

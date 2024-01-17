@@ -13,7 +13,6 @@
 #include <v0/commonapi/CarInfo.hpp>
 
 
-#include <v0/commonapi/CommonTypes.hpp>
 
 #if !defined (COMMONAPI_INTERNAL_COMPILATION)
 #define COMMONAPI_INTERNAL_COMPILATION
@@ -40,7 +39,7 @@ namespace commonapi {
 class CarInfoProxyBase
     : virtual public CommonAPI::Proxy {
 public:
-    typedef CommonAPI::ObservableReadonlyAttribute<::v0::commonapi::CommonTypes::batteryStruct> BatteryAttribute;
+    typedef CommonAPI::ObservableReadonlyAttribute<::v0::commonapi::CarInfo::batteryStruct> BatteryAttribute;
 
 
     virtual BatteryAttribute& getBatteryAttribute() = 0;

@@ -11,7 +11,7 @@
 #define V0_COMMONAPI_CAR_INFO_SOMEIP_PROXY_HPP_
 
 #include <v0/commonapi/CarInfoProxyBase.hpp>
-#include <v0/commonapi/CommonTypesSomeIPDeployment.hpp>
+#include <v0/commonapi/CarInfoSomeIPDeployment.hpp>
 
 #if !defined (COMMONAPI_INTERNAL_COMPILATION)
 #define COMMONAPI_INTERNAL_COMPILATION
@@ -62,7 +62,7 @@ public:
     virtual std::future<void> getCompletionFuture();
 
 private:
-    CommonAPI::SomeIP::ObservableAttribute<CommonAPI::SomeIP::ReadonlyAttribute<BatteryAttribute, ::v0::commonapi::CommonTypes_::batteryStructDeployment_t>> battery_;
+    CommonAPI::SomeIP::ObservableAttribute<CommonAPI::SomeIP::ReadonlyAttribute<BatteryAttribute, ::v0::commonapi::CarInfo_::batteryStructDeployment_t>> battery_;
 
 };
 

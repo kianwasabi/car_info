@@ -11,7 +11,7 @@
 #define V0_COMMONAPI_CAR_INFO_SOMEIP_STUB_ADAPTER_HPP_
 
 #include <v0/commonapi/CarInfoStub.hpp>
-#include <v0/commonapi/CommonTypesSomeIPDeployment.hpp>
+#include <v0/commonapi/CarInfoSomeIPDeployment.hpp>
 
 #if !defined (COMMONAPI_INTERNAL_COMPILATION)
 #define COMMONAPI_INTERNAL_COMPILATION
@@ -47,7 +47,7 @@ public:
         CarInfoSomeIPStubAdapterHelper::deinit();
     }
 
-    void fireBatteryAttributeChanged(const ::v0::commonapi::CommonTypes::batteryStruct &_value);
+    void fireBatteryAttributeChanged(const ::v0::commonapi::CarInfo::batteryStruct &_value);
     
     void deactivateManagedInstances() {}
     
@@ -58,8 +58,8 @@ public:
 
     CommonAPI::SomeIP::GetAttributeStubDispatcher<
         ::v0::commonapi::CarInfoStub,
-        ::v0::commonapi::CommonTypes::batteryStruct,
-        ::v0::commonapi::CommonTypes_::batteryStructDeployment_t
+        ::v0::commonapi::CarInfo::batteryStruct,
+        ::v0::commonapi::CarInfo_::batteryStructDeployment_t
     > getBatteryAttributeStubDispatcher;
     
     CarInfoSomeIPStubAdapterInternal(
@@ -98,13 +98,13 @@ public:
 };
 
 template <typename _Stub, typename... _Stubs>
-void CarInfoSomeIPStubAdapterInternal<_Stub, _Stubs...>::fireBatteryAttributeChanged(const ::v0::commonapi::CommonTypes::batteryStruct &_value) {
-    CommonAPI::Deployable< ::v0::commonapi::CommonTypes::batteryStruct, ::v0::commonapi::CommonTypes_::batteryStructDeployment_t> deployedValue(_value, static_cast< ::v0::commonapi::CommonTypes_::batteryStructDeployment_t* >(nullptr));
+void CarInfoSomeIPStubAdapterInternal<_Stub, _Stubs...>::fireBatteryAttributeChanged(const ::v0::commonapi::CarInfo::batteryStruct &_value) {
+    CommonAPI::Deployable< ::v0::commonapi::CarInfo::batteryStruct, ::v0::commonapi::CarInfo_::batteryStructDeployment_t> deployedValue(_value, static_cast< ::v0::commonapi::CarInfo_::batteryStructDeployment_t* >(nullptr));
     CommonAPI::SomeIP::StubEventHelper<
         CommonAPI::SomeIP::SerializableArguments<
             CommonAPI::Deployable<
-                ::v0::commonapi::CommonTypes::batteryStruct,
-                ::v0::commonapi::CommonTypes_::batteryStructDeployment_t
+                ::v0::commonapi::CarInfo::batteryStruct,
+                ::v0::commonapi::CarInfo_::batteryStructDeployment_t
             >
             >
     >::sendEvent(

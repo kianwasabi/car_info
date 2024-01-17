@@ -19,7 +19,7 @@ CarInfoStubImpl::~CarInfoStubImpl() {
  * @param consumption_ The battery consumption.
  */
 void CarInfoStubImpl::setBatteryStruct(float level_, float voltage_, float current_, float consumption_) {
-    v0::commonapi::CommonTypes::batteryStruct battery;
+    v0::commonapi::CarInfo::batteryStruct battery;
     battery.setLevel(level_);
     battery.setVoltage(voltage_);
     battery.setCurrent(current_);
