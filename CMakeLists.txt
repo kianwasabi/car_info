@@ -23,6 +23,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
 set(INSTALL_BIN_DIR bin CACHE PATH "Installation directory for binaries")
 set(INSTALL_INCLUDE_DIR include/CarInfo CACHE PATH "Installation directory for header files")
+set(INSTALL_PIRACER_DIR lib/piracer CACHE PATH "Installation directory for piracer")
 set(DEF_INSTALL_CMAKE_DIR lib/cmake/CarInfo-someip)
 set(INSTALL_CMAKE_DIR ${DEF_INSTALL_CMAKE_DIR} CACHE PATH "Installation directory for CMake files")
 
